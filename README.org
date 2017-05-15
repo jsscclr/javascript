@@ -1,0 +1,129 @@
+* Installing Node
+  1. Install NVM (Node Version Manager). This will allow you to easily
+     swap between Node versions. See the [[https://github.com/creationix/nvm][NVM GitHub page]].
+     #+BEGIN_SRC sh
+       curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+     #+END_SRC
+  2. You can install the latest version of Node by running `nvm install node`.
+     #+BEGIN_SRC sh
+       nvm install node
+     #+END_SRC
+  3. For non-personal projects, using the LTS version of Node is
+     recommended. You can install the latest version via `nvm install
+     --lts`.
+     #+BEGIN_SRC sh
+       nvm install --lts
+     #+END_SRC
+  4. Add bash autocompletion to `.bashrc` or `.bash_profile`.
+     #+BEGIN_SRC sh
+     [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+     #+END_SRC
+   
+* Project Management
+** Starting a new project from scratch
+   1. Running `npm init` in an existing folder starts an interactive
+      prompt to create the config file `package.json`.
+      #+BEGIN_SRC sh
+        npm init
+      #+END_SRC
+      or
+      #+BEGIN_SRC sh
+        yarn init
+      #+END_SRC
+   2. I recommend adding a `browserslist` field to your
+      `package.json`. This is used by a few different libraries so you
+      are targetting a certain browser version across all your
+      dependencies. See [[https://github.com/ai/browserslist][Browserslist GitHub page]] for more information
+      and options.
+      #+BEGIN_SRC json
+        {
+          "browserslist": [
+            "> 1%",
+            "last 2 versions"
+          ]
+        }
+      #+END_SRC
+   3. Add a `.gitignore` file. You'll want to ignore node_modules at
+      the very least! [[https://github.com/github/gitignore/blob/master/Node.gitignore][Example Node .gitignore]]
+      #+BEGIN_SRC sh
+        # Logs
+        *.log
+        npm-debug.log*
+        yarn-debug.log*
+        yarn-error.log*
+
+        # Dependencies
+        node_modules/
+      #+END_SRC
+
+   4. Add an `.nvmrc` file, with the version of Node you are using
+      (you can find out by running `node -v`).
+      #+BEGIN_SRC sh
+        6.10
+      #+END_SRC
+
+   5. Set up eslint. [[http://eslint.org/docs/user-guide/getting-started][Eslint]] can be used to enforce code conventions
+      across projects, but for personal projects it works best for
+      catching errors or antipatterns.
+      #+BEGIN_SRC sh
+        npm install eslint --save-dev
+      #+END_SRC
+      or
+      #+BEGIN_SRC sh
+        yarn add eslint --dev
+      #+END_SRC
+      - You can initialise an eslint configuration file (generally
+        `.eslintrc`) by running the following:
+        #+BEGIN_SRC sh
+          ./node_modules/.bin/eslint --init
+        #+END_SRC
+      - Some useful plugins:
+        + [[https://github.com/amilajack/eslint-plugin-compat][eslint-plugin-compat]]
+          #+BEGIN_SRC json
+            {
+              // ...
+              "env": {
+                "browser": true
+              },
+              "plugins": ["compat"],
+              "rules": {
+                // ...
+                "compat/compat": 2
+              }
+            }
+          #+END_SRC
+
+      
+** Starting from an existing project
+   1. Ensure you have the correct version of Node. If the project has
+      an `.nvmrc`, you can run `nvm use` to either use or install the
+      correct version of Node for the project. Note that engine
+      version is not a huge deal for client-side JavaScript, but many
+      development tools rely on or expect a specific version of Node.
+      #+BEGIN_SRC sh
+        nvm use
+      #+END_SRC
+      - I have a script added to my `.bash_profile` that looks for a
+        `.nvmrc` on launch.
+        #+BEGIN_SRC sh
+          if [ -e ".nvmrc" ]; then
+            nvm use;
+          else
+            nvm use default;
+          fi
+        #+END_SRC
+   2. After cloning the repository (or fetching after some changes),
+      you can get the required dependencies via `npm install`.
+      #+BEGIN_SRC sh
+        npm install
+      #+END_SRC
+      or
+      #+BEGIN_SRC sh
+        yarn install
+      #+END_SRC
+   3. Per repo instructions will vary, but generally, running `npm
+      start` within a repo should do something useful! You can find
+      particular scripts via a `package.json`'s `scripts` entry, and
+      run them by `npm run foo`.
+
+
