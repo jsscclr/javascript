@@ -4,5 +4,11 @@
   "description": "JavaScript~",
   "main": "index.js",
   "repository": "https://github.com/jsscclr/javascript",
-  "author": "Jessica Claire Edwards <git@jessica.email>"
+  "author": "Jessica Claire Edwards <git@jessica.email>",
+  "scripts": {
+    "how-to-npm": "how-to-npm"
+  },
+  "dependencies": {
+    "how-to-npm": "^2.4.2"
+  }
 }

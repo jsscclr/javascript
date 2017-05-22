@@ -20,7 +20,7 @@
    
 * Project Management
 ** Starting a new project from scratch
-   1. Running `npm init~ in an existing folder starts an interactive
+   1. Running ~npm init~ in an existing folder starts an interactive
       prompt to create the config file ~package.json~.
       #+BEGIN_SRC sh
         npm init
@@ -122,4 +122,56 @@
       particular scripts via a ~package.json~'s ~scripts~ entry, and run
       them by ~npm run foo~.
 
+** Creating and running scripts
+   - Most Node projects provide a ~start~ command. This is (or should
+     be) the entry point to a Node application.
+   - If there is no ~start~ entry in your ~package.json~, npm will run
+     ~node server.js~ (if there is a file called ~server.js~ in the root
+     of your directory).
+   - To add the start script to your application, add a ~start~ entry to
+     the field ~scripts~ in your ~package.json~.
+     #+BEGIN_SRC json
+     "scripts": {
+       "start": "node index.js"
+     }
+     #+END_SRC
+   - To run the start script, simply type ~npm start~.
+   - You can use the above steps for the following:
+     - ~npm start~
+     - ~npm test~
+     - ~npm stop~
+     - ~npm restart~
+       1. ~npm stop~
+       2. ~npm restart~
+       3. ~npm start~
+   - The above scripts also support running scripts before and after
+     the base script by using the prefixes ~pre~ and ~post~. 
+     - ~npm start~
+       1. ~npm prestart~
+       2. ~npm start~
+       3. ~npm poststart~
+     - ~npm test~
+       1. ~npm pretest~
+       2. ~npm test~
+       3. ~npm posttest~
+     - ~npm stop~
+       1. ~npm prestop~
+       2. ~npm stop~
+       3. ~npm poststop~
+     - ~npm restart~
+       1. ~npm prerestart~
+       2. ~npm prestop~
+       3. ~npm stop~
+       4. ~npm poststop~
+       5. ~npm restart~
+       6. ~npm prestart~
+       7. ~npm start~
+       8. ~npm poststart~
+       9. ~npm postrestart~
+       
+   - You can add and run any script you like. Note that the syntax
+     changes slightly. If you add a script called ~foo~, to execute it,
+     you run it by executing ~npm run foo~.
+   - When creating npm scripts, a useful thing to remember is that ~npm
+     run~ adds ~node_modules/.bin~ to the ~PATH~.
 
