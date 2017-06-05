@@ -175,3 +175,66 @@
    - When creating npm scripts, a useful thing to remember is that ~npm
      run~ adds ~node_modules/.bin~ to the ~PATH~.
 
+** Webpack
+   #+BEGIN_SRC sh
+   yarn add webpack webpack-dev-server --dev
+   #+END_SRC
+
+   #+BEGIN_SRC js
+   // webpack.config.js
+
+   module.exports = {
+     entry: "./src/app.js",
+       output: {
+         filename: "dist/bundle.js"
+       }
+     }
+   }
+   #+END_SRC
+
+   #+BEGIN_SRC json
+   "scripts": {
+     "start": "webpack-dev-server --open"
+   }
+   #+END_SRC
+
+   #+BEGIN_SRC html
+     <!DOCTYPE html>
+     <html lang="en">
+       <head>
+         <meta charset="utf-8">
+         <title>Example</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+       </head>
+       <body>
+         <script src="dist/bundle.js"></script>
+       </body>
+     </html>
+   #+END_SRC
+
+*** Babel
+    #+BEGIN_SRC sh
+    yarn add babel-loader babel-core babel-preset-env --dev
+    #+END_SRC
+
+    #+BEGIN_SRC js
+        // webpack.config.js
+        module.exports = {
+          // ...
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                include: "/src/",
+                use: {
+                  loader: "babel-loader",
+                  options: {
+                    presets: [ "env" ]
+                  }
+                }
+              }
+            ]
+          }
+          // ...
+        }
+    #+END_SRC
